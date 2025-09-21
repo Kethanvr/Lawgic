@@ -89,11 +89,19 @@ def get_vector_store(text_chunks):
         st.session_state.raw_text = "\n".join(text_chunks)
         st.sidebar.success("Documents Processed Successfully!", icon="✅")
     except Exception as e:
-        st.error(f"Error creating vector store: {e}")
-        st.stop()
+        if "429" in str(e) or "quota" in str(e).lower():
+            st.warning("⚠️ **Quota Exceeded**: Embedding service quota exceeded. Documents will be processed without vector search capabilities.")
+            st.info("💡 **Tip**: Upgrade to a paid Google AI plan to enable full document search features.")
+            # Store raw text without vector store for basic processing
+            st.session_state.raw_text = "\n".join(text_chunks)
+            st.session_state.vector_store = None
+            st.sidebar.success("Documents loaded (Basic mode - no vector search)", icon="📄")
+        else:
+            st.error(f"Error creating vector store: {e}")
+            st.stop()
 
 def get_conversational_chain():
-    prompt_template = "You are ClearClause... Context:\n {context}\n Question: \n{question}\n Answer:"
+    prompt_template = "You are Lawgic... Context:\n {context}\n Question: \n{question}\n Answer:"
     model = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.3, google_api_key=api_key)
     prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
     return load_qa_chain(model, chain_type="stuff", prompt=prompt)
@@ -104,13 +112,24 @@ def get_summary_chain():
 
 # --- QnA & Summarization ---
 def handle_document_qna(user_question):
-    docs = st.session_state.vector_store.similarity_search(user_question)
-    chain = get_conversational_chain()
-    response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
-    return response["output_text"]
+    if st.session_state.vector_store:
+        # Full vector search mode
+        docs = st.session_state.vector_store.similarity_search(user_question)
+        chain = get_conversational_chain()
+        response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
+        return response["output_text"]
+    else:
+        # Basic mode - use raw text without vector search
+        if st.session_state.raw_text:
+            # Use first 4000 characters for context (within token limits)
+            context = st.session_state.raw_text[:4000]
+            prompt = f"You are Lawgic, a helpful Legal AI Assistant. Answer the question based on the provided document context.\n\nDocument Context:\n{context}\n\nQuestion: {user_question}\n\nAnswer:"
+            return robust_generate(prompt)
+        else:
+            return "No document context available. Please upload and process documents first."
 
 def handle_general_qna(user_question):
-    prompt = f"You are ClearClause, a helpful Legal AI Assistant. Answer: {user_question}"
+    prompt = f"You are Lawgic, a helpful Legal AI Assistant. Answer: {user_question}"
     return robust_generate(prompt)
 
 def generate_summary(custom_instruction):
@@ -124,14 +143,14 @@ def generate_summary(custom_instruction):
         initial_summary = chain.run(docs)
         refine_prompt = f"Given the following summary, refine it to follow: '{custom_instruction}'.\n\nSUMMARY:\n{initial_summary}"
         final_summary = robust_generate(refine_prompt)
-    st.session_state.chat_history.append(("ClearClause", f"**Summary (Instruction: *{custom_instruction}*)**\n\n" + final_summary))
+    st.session_state.chat_history.append(("Lawgic", f"**Summary (Instruction: *{custom_instruction}*)**\n\n" + final_summary))
 
 def translate_text(text, target_language):
     prompt = f"Translate the following English text to {target_language}: '{text}'"
     return robust_generate(prompt)
 
 # --- Page Config ---
-st.set_page_config(page_title="ClearClause - Legal AI", page_icon="⚖️", layout="wide")
+st.set_page_config(page_title="Lawgic - Legal AI", page_icon="⚖️", layout="wide")
 st.markdown("""
     <style> 
         <style>
@@ -204,7 +223,7 @@ if "raw_text" not in st.session_state: st.session_state.raw_text = ""
 # --- Sidebar ---
 with st.sidebar:
     st.image("logo.png", width=250)
-    st.title("ClearClause Menu")
+    st.title("Lawgic Menu")
     st.write("---")
 
     st.header("1. Upload Document")
@@ -218,9 +237,11 @@ with st.sidebar:
         else:
             st.warning("Please upload at least one document.", icon="⚠️")
 
-    if st.session_state.vector_store:
+    if st.session_state.vector_store or st.session_state.raw_text:
         st.write("---")
         st.header("2. Custom Summary")
+        if not st.session_state.vector_store and st.session_state.raw_text:
+            st.info("📄 **Basic Mode**: Document loaded without vector search due to API quota limits.")
         custom_instruction = st.text_input("Custom Summary Instruction (Optional):", "Provide a standard one-paragraph summary.")
         if st.button("Generate Summary", use_container_width=True):
             generate_summary(custom_instruction)
@@ -242,7 +263,7 @@ with st.sidebar:
         st.rerun()
 
 # --- Main UI ---
-st.title("⚖️ ClearClause - Your Legal AI Assistant")
+st.title("⚖️ Lawgic - Your Legal AI Assistant")
 chat_tab, translate_tab = st.tabs(["Chat", "Translate"])
 
 with chat_tab:
@@ -268,9 +289,9 @@ with translate_tab:
 prompt = st.chat_input("Ask a question about your document or a general legal query...")
 if prompt:
     st.session_state.chat_history.append(("You", prompt))
-    if st.session_state.vector_store:
+    if st.session_state.vector_store or st.session_state.raw_text:
         response_text = handle_document_qna(prompt)
     else:
         response_text = handle_general_qna(prompt)
-    st.session_state.chat_history.append(("ClearClause", response_text))
+    st.session_state.chat_history.append(("Lawgic", response_text))
     st.rerun()
