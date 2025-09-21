@@ -1,18 +1,19 @@
-# ⚖️ ClearClause — A Legal AI Assistant
-### 🤖 *A Legal AI Chatbot powered by Gemini API*
+# ⚖️ Lawgic — A Legal AI Assistant
+
+### 🤖 _A Legal AI Chatbot powered by Gemini API_
 
 ---
 
 ## 📌 Project Overview
 
-**ClearClause** is a Streamlit-based **Legal AI Assistant** designed to help users interact with their legal documents in a more intuitive way.  
+**Lawgic** is a Streamlit-based **Legal AI Assistant** designed to help users interact with their legal documents in a more intuitive way.
 
 It allows users to:
 
-- 📑 **Upload and analyze legal documents** (`PDF` / `DOCX`)  
-- 🤖 **Ask questions** about the uploaded documents or general legal queries  
-- 📝 **Generate detailed summaries** with **custom instructions**  
-- 🌍 **Translate text** into multiple languages (currently **Hindi** and **Marathi**)  
+- 📑 **Upload and analyze legal documents** (`PDF` / `DOCX`)
+- 🤖 **Ask questions** about the uploaded documents or general legal queries
+- 📝 **Generate detailed summaries** with **custom instructions**
+- 🌍 **Translate text** into multiple languages (currently **Hindi** and **Marathi**)
 
 The system uses **Google’s Gemini 2.5 Flash model** for **QnA, summarization, and translation**, and **FAISS vector database** for efficient semantic search across uploaded documents.
 
@@ -20,31 +21,31 @@ The system uses **Google’s Gemini 2.5 Flash model** for **QnA, summarization, 
 
 ## 🛠 Tech Stack
 
-| Category              | Tools/Libraries                                      |
-|-----------------------|------------------------------------------------------|
-| Framework             | Streamlit                                            |
-| Language              | Python 3.10+                                         |
-| AI Model              | Google Gemini 2.5 Flash via `google-generativeai`    |
-| Embeddings            | `GoogleGenerativeAIEmbeddings` (LangChain)           |
-| Vector Database       | FAISS (Facebook AI Similarity Search)                |
-| Text Splitting        | LangChain RecursiveCharacterTextSplitter             |
-| Document Parsing      | PyMuPDF (`fitz`), python-docx                        |
-| Environment Management| python-dotenv                                        |
-| UI Enhancements       | Custom Streamlit CSS styling                         |
+| Category               | Tools/Libraries                                   |
+| ---------------------- | ------------------------------------------------- |
+| Framework              | Streamlit                                         |
+| Language               | Python 3.10+                                      |
+| AI Model               | Google Gemini 2.5 Flash via `google-generativeai` |
+| Embeddings             | `GoogleGenerativeAIEmbeddings` (LangChain)        |
+| Vector Database        | FAISS (Facebook AI Similarity Search)             |
+| Text Splitting         | LangChain RecursiveCharacterTextSplitter          |
+| Document Parsing       | PyMuPDF (`fitz`), python-docx                     |
+| Environment Management | python-dotenv                                     |
+| UI Enhancements        | Custom Streamlit CSS styling                      |
 
 ---
 
-## 📸 ClearClause Showcase
+## 📸 Lawgic Showcase
 
-Here are some visuals of **ClearClause** in action:
+Here are some visuals of **Lawgic** in action:
 
-| Feature | Screenshot |
-|---------|------------|
-| **Home Page** | ![Home Page](Outputs/Home.png) |
-| **QnA Interface** | ![General QnA](Outputs/GeneralQ&A.png) |
-| **Document Upload** | ![Document Q&A](Outputs/DocumentQ&A.png) |
-| **Summarization** | ![Summarization](Outputs/Summarization.png) |
-| **Translation** | ![Translation](Outputs/Translation.png) |
+| Feature             | Screenshot                                  |
+| ------------------- | ------------------------------------------- |
+| **Home Page**       | ![Home Page](Outputs/Home.png)              |
+| **QnA Interface**   | ![General QnA](Outputs/GeneralQ&A.png)      |
+| **Document Upload** | ![Document Q&A](Outputs/DocumentQ&A.png)    |
+| **Summarization**   | ![Summarization](Outputs/Summarization.png) |
+| **Translation**     | ![Translation](Outputs/Translation.png)     |
 
 ---
 
@@ -64,21 +65,21 @@ The application's core is a Retrieval-Augmented Generation (RAG) pipeline that c
 
 ## 📊 Key Features
 
-| Feature | Description |
-|---------|-------------|
-| 📂 Multi-Document Upload | Upload one or more `.pdf` or `.docx` legal documents |
-| 🤖 Context-Aware QnA | Ask questions about your documents or general legal queries |
-| 📝 Custom Summaries | Generate summaries based on user-defined instructions |
-| 🌍 Multilingual Support | Translate English legal text into Hindi or Marathi |
-| 💬 Chat History | Maintains full interactive conversation logs |
-| 🎨 Enhanced UI | Streamlit app with custom **Poppins font** and styled chat bubbles |
+| Feature                  | Description                                                        |
+| ------------------------ | ------------------------------------------------------------------ |
+| 📂 Multi-Document Upload | Upload one or more `.pdf` or `.docx` legal documents               |
+| 🤖 Context-Aware QnA     | Ask questions about your documents or general legal queries        |
+| 📝 Custom Summaries      | Generate summaries based on user-defined instructions              |
+| 🌍 Multilingual Support  | Translate English legal text into Hindi or Marathi                 |
+| 💬 Chat History          | Maintains full interactive conversation logs                       |
+| 🎨 Enhanced UI           | Streamlit app with custom **Poppins font** and styled chat bubbles |
 
 ---
 
 ## 📁 Folder Structure
 
 ```
-ClearClause—Legal-AI-Assistant/
+Lawgic—Legal-AI-Assistant/
 ├── app.py           # Main Streamlit application script
 ├── requirements.txt # Python libraries required for the project
 ├── logo.png         # Custom logo for the application UI
@@ -107,12 +108,14 @@ To get a local copy up and running, follow these simple steps.
 ### Installation & Setup
 
 1.  **Clone the Repository**
+
     ```bash
-    git clone https://github.com/sanketjadhav09/ClearClause-Legal-AI-Assistant.git
-    cd ClearClause-Legal-AI-Assistant
+    git clone https://github.com/sanketjadhav09/Lawgic-Legal-AI-Assistant.git
+    cd Lawgic-Legal-AI-Assistant
     ```
 
 2.  **Create and Activate a Virtual Environment**
+
     - This keeps the project dependencies isolated.
 
     - **On Windows:**
@@ -127,6 +130,7 @@ To get a local copy up and running, follow these simple steps.
       ```
 
 3.  **Install Required Libraries**
+
     ```bash
     pip install -r requirements.txt
     ```
@@ -148,7 +152,7 @@ Once the installation is complete, you can run the application locally with a si
 streamlit run app.py
 ```
 
-Navigate to `http://localhost:8501` in your web browser to interact with the ClearClause Legal AI Assistant.
+Navigate to `http://localhost:8501` in your web browser to interact with the Lawgic Legal AI Assistant.
 
 ---
 
@@ -161,33 +165,6 @@ This application is designed for and deployed on **Streamlit Community Cloud**. 
 3.  The API key is securely stored in the Streamlit Cloud application's **Secrets management**.
 4.  Any push to the `main` branch on GitHub automatically triggers a redeployment of the application.
 
-**Live App URL:** [**https://clearclause-legal-ai-assistant.streamlit.app/**](https://clearclause-legal-ai-assistant.streamlit.app/)
+**Live App URL:** [**https://lawgic-legal-ai-assistant.streamlit.app/**](https://lawgic-legal-ai-assistant.streamlit.app/)
 
----
 
-## 📄 License
-
-This project is open-source and available under the terms of the [MIT License](LICENSE).
-
----
-
-## 🙏 Acknowledgements
-
-I would like to express my gratitude to the following:
-
-- **Sumago Infotech Pvt. Ltd.** – For guidance and support in AI, ML, and Data Science.  
-- **Streamlit** – For providing the framework to build this interactive application.  
-- **LangChain & Google Gemini API** – For powering the AI capabilities of this project.  
-- **Open-source libraries** – For making development easier.
-
----
-
-## 👨‍💻 Author
-
-### **Sanket Kishor Jadhav**
-
-**Python Developer | AI & ML Engineer | Tech Innovator**
-
--   Architect and developer of ClearClause, a Legal AI Assistant.
--   Specializing in applying LLMs and NLP to simplify complex legal data.
--   Focused on delivering a robust, powerful, and user-friendly tool for legal document analysis.
