@@ -2,6 +2,8 @@
 
 ### 🤖 _A Legal AI Chatbot powered by Gemini API_
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
 ---
 
 ## 📌 Project Overview
@@ -15,7 +17,7 @@ It allows users to:
 - 📝 **Generate detailed summaries** with **custom instructions**
 - 🌍 **Translate text** into multiple languages (currently **Hindi** and **Marathi**)
 
-The system uses **Google’s Gemini 2.5 Flash model** for **QnA, summarization, and translation**, and **FAISS vector database** for efficient semantic search across uploaded documents.
+The system uses **Google's Gemini 2.5 Flash model** for **QnA, summarization, and translation**, and **FAISS vector database** for efficient semantic search across uploaded documents.
 
 ---
 
@@ -158,13 +160,38 @@ Navigate to `http://localhost:8501` in your web browser to interact with the Law
 
 ## 🌐 Deployment
 
-This application is designed for and deployed on **Streamlit Community Cloud**. The deployment process is automated via GitHub:
+### Option 1: Deploy to Render (Recommended)
 
-1.  A public GitHub repository holds the application code (`app.py`, `requirements.txt`, etc.).
-2.  The `.env` file containing the `API_KEY` is kept local and ignored by Git via `.gitignore`.
-3.  The API key is securely stored in the Streamlit Cloud application's **Secrets management**.
-4.  Any push to the `main` branch on GitHub automatically triggers a redeployment of the application.
+**One-Click Deploy:**
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
 
-**Live App URL:** [**https://lawgic-legal-ai-assistant.streamlit.app/**](https://lawgic-legal-ai-assistant.streamlit.app/)
+**Manual Deploy:**
 
+1. Fork this repository
+2. Create a new account on [Render.com](https://render.com)
+3. Connect your GitHub account
+4. Create a new "Web Service" from your forked repository
+5. Use these settings:
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `streamlit run app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true --server.fileWatcherType=none --server.enableCORS=false --server.enableXsrfProtection=false`
+6. Add environment variable: `API_KEY` = your Google API key
+7. Deploy!
 
+### Option 2: Deploy to Streamlit Cloud
+
+1. Push your code to GitHub
+2. Go to [share.streamlit.io](https://share.streamlit.io)
+3. Connect your GitHub repository
+4. Add your `API_KEY` in the secrets section
+5. Deploy!
+
+### Environment Variables
+
+Make sure to set these environment variables in your deployment platform:
+
+- `API_KEY`: Your Google Gemini API key (get it from [Google AI Studio](https://aistudio.google.com/))
+
+### Important Notes
+
+- **Free Tier Limitations**: The free Google AI plan has limited embedding quotas. The app will work in "basic mode" when quotas are exceeded.
+- **Upgrade for Full Features**: Consider upgrading to a paid Google AI plan for full vector search capabilities.
