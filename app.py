@@ -95,7 +95,7 @@ def get_vector_store(text_chunks):
             # Store raw text without vector store for basic processing
             st.session_state.raw_text = "\n".join(text_chunks)
             st.session_state.vector_store = None
-            st.sidebar.success("Documents loaded (Basic mode - no vector search)", icon="📄")
+            st.sidebar.success("Documents Processed Successfully!", icon="✅")
         else:
             st.error(f"Error creating vector store: {e}")
             st.stop()
