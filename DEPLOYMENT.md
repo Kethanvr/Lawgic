@@ -16,7 +16,7 @@
 3. **Connect GitHub** and select your forked repository
 4. **Create Web Service** with these settings:
    - **Name:** `lawgic-legal-ai` (or your preferred name)
-   - **Environment:** `Python 3`
+   - **Environment:** `Python 3.11.10`
    - **Build Command:** `pip install -r requirements.txt`
    - **Start Command:** `streamlit run app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true --server.fileWatcherType=none --server.enableCORS=false --server.enableXsrfProtection=false`
 5. **Add Environment Variable:**
